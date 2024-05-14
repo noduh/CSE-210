@@ -1,9 +1,11 @@
 using System;
+using System.Text.Json.Serialization;
 
 class Program
 {
-    static void Main(string[] args)
-    {
-        Console.WriteLine("Hello Develop02 World!");
+    public List<Journal> journal = [];
+
+    static void Main(string[] args) {
+        
     }
 }
