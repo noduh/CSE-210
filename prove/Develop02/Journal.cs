@@ -1,7 +1,7 @@
 public class Journal
 {
     private List<Entry> entries = [];
-    private List<string> prompts = [];
+    private List<string> prompts = []; // default prompts
     private Random random = new Random();
     private string dateTimeFormat = "yyyy-MM-dd HH:mm:ss"; // default date/time format
 
@@ -57,6 +57,12 @@ public class Journal
         entries.RemoveAt(index);
     }
 
+    // Get an entry based on where it is
+    public Entry GetEntry(int entryNumber) {
+        int index = entryNumber - 1;
+        return entries[entryNumber];
+    }
+
     // Displays an entry in it's completeness
     public void DisplayEntry(Entry entry)
     {
@@ -72,5 +78,11 @@ public class Journal
             Console.WriteLine($"Entry #{entries.IndexOf(entry) + 1}");
             DisplayEntry(entry);
         }
+    }
+
+    public int GetEntryCount() {
+        int count;
+        count = entries.Count;
+        return count;
     }
 }
