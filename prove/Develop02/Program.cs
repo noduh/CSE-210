@@ -1,10 +1,12 @@
 using System;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 class Program
 {
     static void Main(string[] args)
     {
+        var jsonOptions = new JsonSerializerOptions { WriteIndented = true };
         Journal journal = new Journal();
         int choice;
         string menu =
@@ -26,6 +28,8 @@ class Program
             Console.WriteLine(menu);
             choice = GetIntInput();
             int entryNumber; // used for some cases targeting specific entries
+            string fileLocation; // used for saving and loading
+            string jsonText; // for saving and loading
 
             // make choice based on user input
             switch (choice)
@@ -36,14 +40,31 @@ class Program
                     journal = new Journal();
                     break;
                 case 2: // save journal
-                    Console.WriteLine("Saving..");
-                    // use json serialize to save
-                    Console.WriteLine("Done");
+                    Console.Write("File location to save to: ");
+                    fileLocation = Console.ReadLine();
+                    Console.WriteLine("Saving...");
+                    jsonText = JsonSerializer.Serialize(journal, jsonOptions); // create the json
+                    try
+                    {
+                        File.WriteAllText(fileLocation, jsonText);
+                        Console.WriteLine("Done");
+                    }
+                    catch (IOException)
+                    {
+                        Console.WriteLine("Failed. Try a different file path.");
+                    }
                     break;
                 case 3: // load journal
-                    Console.WriteLine("Loading...");
-                    // use json serialize to load
-                    Console.WriteLine("Done");
+                    Console.Write("File path to load from: ");
+                    fileLocation = Console.ReadLine();
+                    try {
+                        Console.WriteLine("Loading...");
+                        jsonText = File.ReadAllText(fileLocation);
+                        journal = JsonSerializer.Deserialize<Journal>(jsonText);
+                        Console.WriteLine("Done");
+                    } catch (IOException) {
+                        Console.WriteLine("Failed. Try a different file path.");
+                    }
                     break;
                 case 4: // new entry
                     journal.NewEntry();

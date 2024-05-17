@@ -1,6 +1,10 @@
+using System.Text.Json.Serialization;
+
 public class Journal
 {
+    [JsonInclude]
     private List<Entry> entries = [];
+    [JsonInclude]
     private List<string> prompts = // default prompts
     [
         "What is one thing you are grateful for?",
@@ -10,6 +14,7 @@ public class Journal
         "Who did you interact with today?"
     ];
     private Random random = new Random();
+    [JsonInclude]
     private string dateTimeFormat = "yyyy-MM-dd HH:mm:ss"; // default date/time format
 
     public void SetPrompts()

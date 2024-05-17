@@ -455,3 +455,6 @@ $RECYCLE.BIN/
 
 # draw.io bakup files
 *drawio.bkp
+
+# json files used for testing
+*test.json
