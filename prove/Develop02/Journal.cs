@@ -1,7 +1,14 @@
 public class Journal
 {
     private List<Entry> entries = [];
-    private List<string> prompts = []; // default prompts
+    private List<string> prompts = // default prompts
+    [
+        "What is one thing you are grateful for?",
+        "What was the highlight of your day?",
+        "What is something new that you want to try?",
+        "Did you learn something today? If so, what? If not, why?",
+        "Who did you interact with today?"
+    ];
     private Random random = new Random();
     private string dateTimeFormat = "yyyy-MM-dd HH:mm:ss"; // default date/time format
 
@@ -58,7 +65,8 @@ public class Journal
     }
 
     // Get an entry based on where it is
-    public Entry GetEntry(int entryNumber) {
+    public Entry GetEntry(int entryNumber)
+    {
         int index = entryNumber - 1;
         return entries[entryNumber];
     }
@@ -80,7 +88,8 @@ public class Journal
         }
     }
 
-    public int GetEntryCount() {
+    public int GetEntryCount()
+    {
         int count;
         count = entries.Count;
         return count;

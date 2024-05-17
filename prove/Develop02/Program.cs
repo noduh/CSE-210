@@ -49,7 +49,10 @@ class Program
                     journal.NewEntry();
                     break;
                 case 5: // delete entry
-                    entryNumber = GetSpecificEntry("Which entry do you want to delete? (0 to cancel)", journal);
+                    entryNumber = GetSpecificEntry(
+                        "Which entry do you want to delete? (0 to cancel)",
+                        journal
+                    );
                     if (entryNumber != 0)
                     {
                         journal.DeleteEntry(entryNumber);
@@ -59,16 +62,32 @@ class Program
                     journal.DisplayEntries();
                     break;
                 case 7: // show entry
-                    entryNumber = GetSpecificEntry("Which entry do you want to display? (0 to cancel)", journal);
-                    if (entryNumber != 0) {
+                    entryNumber = GetSpecificEntry(
+                        "Which entry do you want to display? (0 to cancel)",
+                        journal
+                    );
+                    if (entryNumber != 0)
+                    {
                         Entry entry = journal.GetEntry(entryNumber); // get the entry to display
                         journal.DisplayEntry(entry);
                     }
                     break;
                 case 8: // change time format
-                //
+                    Console.WriteLine("Type the format to use when displaying times.");
+                    string format = Console.ReadLine();
+                    journal.SetDateTimeFormat(format);
+                    break;
                 case 9: // set/show prompts
-                //
+                    Console.WriteLine("Here are the current prompts:");
+                    Console.WriteLine(journal.GetPrompts());
+                    Console.Write("Do you want to change the prompts? [Y/n] ");
+                    string yn = Console.ReadLine();
+                    yn = yn.ToLower();
+                    if (yn == "y" || yn == "")
+                    {
+                        journal.SetPrompts();
+                    }
+                    break;
                 default:
                     Console.WriteLine("Not a valid choice");
                     break;
@@ -85,16 +104,17 @@ class Program
         {
             userNumber = int.Parse(stringToParse);
         }
-        catch (FormatException e)
+        catch (FormatException)
         {
-            Console.WriteLine($"Input must be an integer ({e})");
+            Console.WriteLine($"Input must be an integer");
             userNumber = -1;
         }
         return userNumber;
     }
 
     // Get's a specific entry from the user, allowing 0 for cancel
-    static int GetSpecificEntry(string message, Journal journal) {
+    static int GetSpecificEntry(string message, Journal journal)
+    {
         Console.WriteLine(message);
         int entryNumber;
         // make sure they pick an existing entry or 0
