@@ -75,7 +75,7 @@ public class Journal
     public Entry GetEntry(int entryNumber)
     {
         int index = entryNumber - 1;
-        return entries[entryNumber];
+        return entries[index];
     }
 
     // Displays an entry in it's completeness
