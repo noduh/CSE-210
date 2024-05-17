@@ -1,4 +1,5 @@
 using System;
+using System.Reflection.PortableExecutable;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -100,7 +101,12 @@ class Program
                     break;
                 case 9: // set/show prompts
                     Console.WriteLine("Here are the current prompts:");
-                    Console.WriteLine(journal.GetPrompts());
+                    List<string> prompts = journal.GetPrompts();
+                    Console.WriteLine("Current Prompts:");
+                    foreach (string prompt in prompts) {
+                        Console.WriteLine(prompt);
+                    }
+                    // Console.WriteLine(journal.GetPrompts());
                     Console.Write("Do you want to change the prompts? [Y/n] ");
                     string yn = Console.ReadLine();
                     yn = yn.ToLower();
