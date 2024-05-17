@@ -4,6 +4,7 @@ public class Journal
 {
     [JsonInclude]
     private List<Entry> entries = [];
+
     [JsonInclude]
     private List<string> prompts = // default prompts
     [
@@ -14,6 +15,7 @@ public class Journal
         "Who did you interact with today?"
     ];
     private Random random = new Random();
+
     [JsonInclude]
     private string dateTimeFormat = "yyyy-MM-dd HH:mm:ss"; // default date/time format
 

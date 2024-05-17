@@ -58,12 +58,15 @@ class Program
                 case 3: // load journal
                     Console.Write("File path to load from: ");
                     fileLocation = Console.ReadLine();
-                    try {
+                    try
+                    {
                         Console.WriteLine("Loading...");
                         jsonText = File.ReadAllText(fileLocation);
                         journal = JsonSerializer.Deserialize<Journal>(jsonText);
                         Console.WriteLine("Done");
-                    } catch (IOException) {
+                    }
+                    catch (IOException)
+                    {
                         Console.WriteLine("Failed. Try a different file path.");
                     }
                     break;
@@ -103,7 +106,8 @@ class Program
                     Console.WriteLine("Here are the current prompts:");
                     List<string> prompts = journal.GetPrompts();
                     Console.WriteLine("Current Prompts:");
-                    foreach (string prompt in prompts) {
+                    foreach (string prompt in prompts)
+                    {
                         Console.WriteLine(prompt);
                     }
                     // Console.WriteLine(journal.GetPrompts());

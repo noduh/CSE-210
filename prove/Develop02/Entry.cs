@@ -4,8 +4,10 @@ public class Entry
 {
     [JsonInclude]
     private readonly string prompt;
+
     [JsonInclude]
     private string content;
+
     [JsonInclude]
     private DateTime time;
 
