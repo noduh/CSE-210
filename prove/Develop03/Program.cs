@@ -1,3 +1,7 @@
+/*
+Credit to Ben Crowder for the JSON files. https://github.com/bcbooks/scriptures-json
+*/
+
 using System;
 
 class Program
