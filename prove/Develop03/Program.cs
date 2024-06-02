@@ -8,6 +8,17 @@ class Program
 {
     static void Main(string[] args)
     {
-        Reference scriptures = new Reference("Words of Mormon", 2, 8, "Standard Works JSON\\book-of-mormon-reference.json");
+        Reference scriptures = new Reference(
+            "2 Nephi",
+            1,
+            8,
+            10,
+            "Standard Works JSON\\book-of-mormon-reference.json"
+        );
+        do
+        {
+            Console.ReadLine();
+        } while (scriptures.PrintModifyScripture());
+        Console.WriteLine("finished");
     }
 }
