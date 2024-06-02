@@ -8,6 +8,6 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello Develop03 World!");
+        Reference scriptures = new Reference("Words of Mormon", 2, 8, "Standard Works JSON\\book-of-mormon-reference.json");
     }
 }
