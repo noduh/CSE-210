@@ -56,7 +56,7 @@ public class Reference
             {
                 versesFinished++;
             }
-            Console.WriteLine(verse.ToString());
+            Console.WriteLine(verse.ToString()); // prints the verse
         }
         return versesFinished < scriptures.Count; // tells us if all the verses have finished
     }

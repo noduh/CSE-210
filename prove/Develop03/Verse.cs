@@ -27,12 +27,12 @@ class Verse
             }
             maxRandomWords = wordsNotBlank;
         }
-        int newNewBlankWordCount = random.Next(1, maxRandomWords + 1);
+        int newNewBlankWordCount = random.Next(1, maxRandomWords + 1); // picks a random number of words to make blank
         int numNewBlankWordsFinished = 0;
-        while (numNewBlankWordsFinished < newNewBlankWordCount)
+        while (numNewBlankWordsFinished < newNewBlankWordCount) // blanks all the words
         {
             int randomIndex = random.Next(words.Count);
-            if (!words[randomIndex].CheckBlank())
+            if (!words[randomIndex].CheckBlank()) // only try to blank the word if it's not already blank
             {
                 words[randomIndex].Blank();
                 numNewBlankWordsFinished++;
@@ -41,6 +41,7 @@ class Verse
         return true;
     }
 
+    // get the string version of the verse by getting the string for each word
     public override string ToString()
     {
         string verseString = "";
@@ -51,6 +52,7 @@ class Verse
         return verseString;
     }
 
+    // check how many words aren't blank
     private int WordsNotBlank()
     {
         int wordsNotBlank = 0;
