@@ -86,8 +86,16 @@ public class Reference
     {
         string jsonText = File.ReadAllText(fileAddress); // turn the file into a string
         JsonDocument standardWorkJson = JsonDocument.Parse(jsonText); // parse the string to a JsonDocument
-        JsonElement bookJson = standardWorkJson.RootElement.GetProperty(book); // get the book
-        JsonElement chapterJson = bookJson.GetProperty(chapter.ToString()); // get the chapter
+        JsonElement chapterJson;
+        if (!(book == ""))
+        {
+            JsonElement bookJson = standardWorkJson.RootElement.GetProperty(book); // get the book
+            chapterJson = bookJson.GetProperty(chapter.ToString()); // get the chapter
+        }
+        else
+        {
+            chapterJson = standardWorkJson.RootElement.GetProperty(chapter.ToString()); // get the chapter
+        }
         for (int verseNum = startVerse; verseNum <= endVerse; verseNum++)
         {
             string verseString = chapterJson.GetProperty(verseNum.ToString()).GetString();
