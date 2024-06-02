@@ -41,6 +41,18 @@ class Verse
         return true;
     }
 
+    // Reset the verse
+    public void ResetVerse()
+    {
+        foreach (Word word in words)
+        {
+            if (word.CheckBlank()) // if it's blank, reset it to not blank
+            {
+                word.Blank();
+            }
+        }
+    }
+
     // get the string version of the verse by getting the string for each word
     public override string ToString()
     {

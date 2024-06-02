@@ -10,6 +10,7 @@ public class Reference
     private string fileAddress;
     private string scriptureReference;
 
+    // create the whole scripture from the information given, and prints the scripture
     public Reference(string book, int chapter, int verse, string fileAddress)
     {
         this.book = book;
@@ -19,14 +20,16 @@ public class Reference
         this.fileAddress = fileAddress;
         this.scriptureReference = $"{book} {chapter}:{verse}";
 
+        Console.Clear();
         Console.WriteLine(scriptureReference);
         FindVerses(); // create the list of verses in 'scriptures'
-        foreach (Verse v in scriptures)
-        { // print the scriptures
+        foreach (Verse v in scriptures) // print the scriptures
+        {
             Console.WriteLine(v.ToString());
         }
     }
 
+    // create the whole scripture from the information given, and prints the scripture
     public Reference(string book, int chapter, int startVerse, int endVerse, string fileAddress)
     {
         this.book = book;
@@ -36,17 +39,19 @@ public class Reference
         this.fileAddress = fileAddress;
         this.scriptureReference = $"{book} {chapter}:{startVerse}-{endVerse}";
 
+        Console.Clear();
         Console.WriteLine(scriptureReference);
         FindVerses();
-        foreach (Verse v in scriptures)
-        { // create the list of verses in 'scriptures'
+        foreach (Verse v in scriptures) // create the list of verses in 'scriptures'
+        {
             Console.WriteLine(v.ToString()); // print the scriptures
         }
     }
 
     // Modify the Scripture and print it
-    public bool PrintModifyScripture()
-    { // returns false if every verse is blank
+    public bool PrintModifyScripture() // returns false if every verse is blank
+    {
+        Console.Clear();
         int versesFinished = 0; // number of verses that are completely blank
         Console.WriteLine(scriptureReference);
         foreach (Verse verse in scriptures)
@@ -61,6 +66,22 @@ public class Reference
         return versesFinished < scriptures.Count; // tells us if all the verses have finished
     }
 
+    // Reset the scripture and print
+    public void ResetReferenceAndPrint()
+    {
+        foreach (Verse verse in scriptures)
+        {
+            Console.Clear();
+            Console.WriteLine(scriptureReference);
+            verse.ResetVerse();
+            foreach (Verse v in scriptures) // create the list of verses in 'scriptures'
+            {
+                Console.WriteLine(v.ToString()); // print the scriptures
+            }
+        }
+    }
+
+    // create the verse from the json
     private void FindVerses()
     {
         string jsonText = File.ReadAllText(fileAddress); // turn the file into a string
