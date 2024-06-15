@@ -11,7 +11,7 @@ public abstract class Activity
         this.time = time;
     }
 
-    public abstract void RunActivity(int time);
+    public abstract void RunActivity();
 
     public void PrintStartingMessage()
     {
