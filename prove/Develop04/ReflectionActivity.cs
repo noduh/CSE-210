@@ -15,6 +15,20 @@ public class ReflectionActivity : Activity
 
     public override void RunActivity()
     {
-        Console.WriteLine($"Running the Reflection Activity for {time}ms");
+        Random random = new Random();
+        int promptIndex = random.Next(prompts.Count);
+        int timePassed = 0;
+
+        ReadyToStart();
+        Console.WriteLine(prompts[promptIndex]);
+        DelayAnimation(5);
+        timePassed += 5;
+        while (timePassed < time / 1000)
+        {
+            int followupIndex = random.Next(prompts.Count);
+            Console.WriteLine(followupQuestions[followupIndex]);
+            DelayAnimation(5);
+            timePassed += 5;
+        }
     }
 }

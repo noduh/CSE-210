@@ -1,3 +1,5 @@
+using System.Runtime.InteropServices.Marshalling;
+
 public class ListingActivity : Activity
 {
     private List<string> prompts;
@@ -13,6 +15,26 @@ public class ListingActivity : Activity
 
     public override void RunActivity()
     {
-        Console.WriteLine($"Running the Listing Activity for {time}ms");
+        long currentSeconds = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        long finishSeconds = currentSeconds + (time / 1000);
+        int entryCount = 0;
+        Random random = new Random();
+
+        ReadyToStart();
+        int promptIndex = random.Next(prompts.Count);
+        Console.WriteLine(prompts[promptIndex]);
+        Console.Write("Think about this prompt: ");
+        CountDown(7);
+        Console.WriteLine();
+
+        while (DateTimeOffset.UtcNow.ToUnixTimeSeconds() < finishSeconds)
+        {
+            Console.Write("> ");
+            Console.ReadLine();
+            entryCount++;
+        }
+
+        Console.WriteLine($"You put in {entryCount} entries!");
+        DelayAnimation(5);
     }
 }
