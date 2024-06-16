@@ -1,14 +1,18 @@
 public class ListingActivity : Activity
 {
-    List<string> prompts;
+    private List<string> prompts;
 
-    public ListingActivity(int time, List<string> prompts)
-        : base("Listing Activity", "Welcome to the Listing Activity", time)
+    public ListingActivity(List<string> prompts)
+        : base(
+            "Listing Activity",
+            "This activity will help you reflect on the good things in your life by having you list as many things as you can in a certain area."
+        )
     {
         this.prompts = prompts;
     }
 
-    public override void RunActivity() { }
-
-    public override void DelayAnimation() { }
+    public override void RunActivity()
+    {
+        Console.WriteLine($"Running the Listing Activity for {time}ms");
+    }
 }
