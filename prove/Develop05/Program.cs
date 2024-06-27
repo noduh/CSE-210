@@ -17,6 +17,7 @@ class Program
         int userChoice;
         do
         {
+            Console.Write($"{menu}\nChoice: ");
             userChoice = NonNegativeIntInput();
             switch (userChoice)
             {
