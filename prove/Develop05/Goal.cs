@@ -1,22 +1,23 @@
 public abstract class Goal
 {
     // Goal Types
-    public readonly string SIMPLE = "simple";
-    public readonly string ETERNAL = "eternal";
-    public readonly string CHECKLIST = "checklist";
+    public static readonly string SIMPLE = "simple";
+    public static readonly string ETERNAL = "eternal";
+    public static readonly string CHECKLIST = "checklist";
 
     protected int points;
     protected bool isComplete;
     protected string name;
+    protected string type;
 
-    public Goal(int points, string name)
+    public Goal(string name, int points)
     {
         this.points = points;
         this.name = name;
         this.isComplete = false;
     }
 
-    public int GetPoints()
+    public virtual int GetPoints()
     {
         return points;
     }
@@ -31,9 +32,14 @@ public abstract class Goal
         return name;
     }
 
-    public virtual void MarkComplete()
+    public virtual bool MarkComplete() // return false if it's already marked complete
     {
+        if (isComplete)
+        {
+            return false; // already complete
+        }
         isComplete = true;
+        return true; // successfully marked complete
     }
 
     public override string ToString()
@@ -43,6 +49,6 @@ public abstract class Goal
         {
             checkbox = "[✓]";
         }
-        return $"{checkbox} {name} ({points} points)";
+        return $"{checkbox}\t{name} ({points} points)";
     }
 }

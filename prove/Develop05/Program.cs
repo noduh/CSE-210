@@ -15,6 +15,7 @@ class Program
     static void Main(string[] args)
     {
         int userChoice;
+        Quest quest = new Quest();
         do
         {
             Console.Clear();
@@ -22,38 +23,33 @@ class Program
             userChoice = NonNegativeIntInput();
             switch (userChoice)
             {
-                case 0:
-                    Console.WriteLine("Quitting");
+                case 0: // Quit
+                    Console.WriteLine("Quitting...");
                     break;
-                case 1:
-                    Console.WriteLine("Display Goals");
-                    Console.ReadLine();
+                case 1: // Display Goals
+                    quest.DisplayGoals();
                     break;
-                case 2:
+                case 2: // Create Goal
                     Console.WriteLine("Create Goal");
-                    Console.ReadLine();
                     break;
-                case 3:
-                    Console.WriteLine("Current Score: score");
-                    Console.ReadLine();
+                case 3: // Display Score
+                    quest.DisplayScore();
                     break;
-                case 4:
+                case 4: // Complete Goal
                     Console.WriteLine("Mark Complete");
-                    Console.ReadLine();
                     break;
-                case 5:
+                case 5: // Save
                     Console.WriteLine("Saving...");
-                    Console.ReadLine();
                     break;
-                case 6:
+                case 6: // Load
                     Console.WriteLine("Loading...");
-                    Console.ReadLine();
                     break;
-                default:
+                default: // Invalid
                     Console.WriteLine("Bad Choice");
-                    Console.ReadLine();
                     break;
             }
+            Console.Write("Press ENTER to continue...");
+            Console.ReadLine();
         } while (userChoice != 0);
     }
 
