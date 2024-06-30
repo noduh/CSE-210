@@ -1,3 +1,8 @@
+using System.Text.Json.Serialization;
+
+[JsonDerivedType(typeof(SimpleGoal))]
+[JsonDerivedType(typeof(EternalGoal))]
+[JsonDerivedType(typeof(ChecklistGoal))]
 public abstract class Goal
 {
     // Goal Types
@@ -5,9 +10,16 @@ public abstract class Goal
     public static readonly string ETERNAL = "eternal";
     public static readonly string CHECKLIST = "checklist";
 
+    [JsonInclude]
     protected int points;
+
+    [JsonInclude]
     protected bool isComplete;
+
+    [JsonInclude]
     protected string name;
+
+    [JsonInclude]
     protected string type;
 
     public Goal(string name, int points)

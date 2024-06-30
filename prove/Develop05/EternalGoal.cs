@@ -1,7 +1,11 @@
+using System.Text.Json.Serialization;
+
 public class EternalGoal : Goal
 {
-    public EternalGoal(string name, int points)
-        : base(name, points)
+
+    [JsonConstructor]
+    public EternalGoal(string name, int eternalPoints)
+        : base(name, eternalPoints)
     {
         type = ETERNAL;
     }

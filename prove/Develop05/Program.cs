@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json;
 
 class Program
 {
@@ -15,6 +16,9 @@ class Program
     static void Main(string[] args)
     {
         int userChoice;
+        string fileAddress;
+        string goalType;
+        string jsonText;
         Quest quest = new Quest();
         do
         {
@@ -30,19 +34,48 @@ class Program
                     quest.DisplayGoals();
                     break;
                 case 2: // Create Goal
-                    Console.WriteLine("Create Goal");
+                    Console.WriteLine(
+                        $"Goal Types:\n\t{Goal.SIMPLE}\n\t{Goal.ETERNAL}\n\t{Goal.CHECKLIST}"
+                    );
+                    Console.Write("Goal Type: ");
+                    goalType = Console.ReadLine();
+                    quest.CreateNewGoal(goalType);
                     break;
                 case 3: // Display Score
                     quest.DisplayScore();
                     break;
                 case 4: // Complete Goal
-                    Console.WriteLine("Mark Complete");
+                    Console.Write("Goal Number: ");
+                    int goalNumber = NonNegativeIntInput();
+                    quest.MarkGoalComplete(goalNumber);
                     break;
                 case 5: // Save
-                    Console.WriteLine("Saving...");
+                    Console.Write("File Address: ");
+                    fileAddress = Console.ReadLine();
+                    if (!quest.Save(fileAddress)) // if it fails
+                    {
+                        Console.WriteLine("Failed. Try another address.");
+                        break;
+                    }
+                    Console.WriteLine("Saved!");
                     break;
                 case 6: // Load
-                    Console.WriteLine("Loading...");
+                    Console.Write("File Address: ");
+                    fileAddress = Console.ReadLine();
+                    try
+                    {
+                        jsonText = File.ReadAllText(fileAddress);
+                        quest = JsonSerializer.Deserialize<Quest>(jsonText);
+                        Console.WriteLine("Loaded!");
+                    }
+                    catch (IOException)
+                    {
+                        Console.WriteLine("Failed. Try another address.");
+                    }
+                    catch (JsonException)
+                    {
+                        Console.WriteLine("Failed. Bad file.");
+                    }
                     break;
                 default: // Invalid
                     Console.WriteLine("Bad Choice");
@@ -54,7 +87,7 @@ class Program
     }
 
     // readline to parse to a non-negative integer. returns -1 if it can't or the integer is negative.
-    static int NonNegativeIntInput()
+    public static int NonNegativeIntInput()
     {
         int userNumber;
         string stringToParse = Console.ReadLine();

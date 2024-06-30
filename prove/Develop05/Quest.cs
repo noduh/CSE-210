@@ -1,6 +1,12 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
 public class Quest
 {
+    [JsonInclude]
     private int score;
+
+    [JsonInclude]
     private List<Goal> goals = new List<Goal>();
 
     public Quest()
@@ -19,10 +25,43 @@ public class Quest
         }
     }
 
-    public void CreateNewGoals(string goalType)
+    public void CreateNewGoal(string goalType)
     {
-        //Test code
-        Console.WriteLine($"Creating a new {goalType} goal");
+        Goal goalToAdd;
+        if (goalType == Goal.SIMPLE)
+        {
+            Console.Write("Goal Name: ");
+            string name = Console.ReadLine();
+            Console.Write("Points: ");
+            int points = Program.NonNegativeIntInput();
+            goalToAdd = new SimpleGoal(name, points);
+        }
+        else if (goalType == Goal.ETERNAL)
+        {
+            Console.Write("Goal Name: ");
+            string name = Console.ReadLine();
+            Console.Write("Points: ");
+            int points = Program.NonNegativeIntInput();
+            goalToAdd = new EternalGoal(name, points);
+        }
+        else if (goalType == Goal.CHECKLIST)
+        {
+            Console.Write("Goal Name: ");
+            string name = Console.ReadLine();
+            Console.Write("Points: ");
+            int points = Program.NonNegativeIntInput();
+            Console.Write("Bonus Points for Completion: ");
+            int bonusPoints = Program.NonNegativeIntInput();
+            Console.Write("Times to Completion: ");
+            int timesToComplete = Program.NonNegativeIntInput();
+            goalToAdd = new ChecklistGoal(name, points, timesToComplete, bonusPoints);
+        }
+        else
+        {
+            Console.WriteLine("Not a valid goal type. Please try again.");
+            return;
+        }
+        goals.Add(goalToAdd);
     }
 
     public void DisplayScore()
@@ -37,16 +76,17 @@ public class Quest
         score += goals[index].GetPoints();
     }
 
-    public bool SaveGoals(string fileAddress) // returns true if successful
+    public bool Save(string fileAddress) // returns true if successful
     {
-        // temporary
-        Console.WriteLine("Saving...");
-        return true;
-    }
-
-    public bool LoadGoals(string fileAddress) // returns true if successful
-    {
-        Console.WriteLine("Loading...");
-        return true;
+        string jsonText = JsonSerializer.Serialize(this); // create the json
+        try
+        {
+            File.WriteAllText(fileAddress, jsonText);
+            return true;
+        }
+        catch (IOException)
+        {
+            return false;
+        }
     }
 }
