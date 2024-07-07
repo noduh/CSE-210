@@ -1,1 +1,26 @@
-{"score":0,"goals":[{"points":15,"isComplete":false,"name":"testGoal","type":"simple"}]}
+{
+    "score": 150,
+    "goals": [
+        {
+            "$type": "simple",
+            "points": 15,
+            "isComplete": false,
+            "name": "test"
+        },
+        {
+            "$type": "eternal",
+            "points": 15,
+            "isComplete": false,
+            "name": "test eternal"
+        },
+        {
+          "$type": "checklist",
+          "timesCompleted": 3,
+          "timesToComplete": 5,
+          "bonusPoints": 50,
+          "points": 15,
+          "isComplete": false,
+          "name": "test checklist"
+        }
+    ]
+}

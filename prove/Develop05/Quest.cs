@@ -75,18 +75,4 @@ public class Quest
         goals[index].MarkComplete();
         score += goals[index].GetPoints();
     }
-
-    public bool Save(string fileAddress) // returns true if successful
-    {
-        string jsonText = JsonSerializer.Serialize(this); // create the json
-        try
-        {
-            File.WriteAllText(fileAddress, jsonText);
-            return true;
-        }
-        catch (IOException)
-        {
-            return false;
-        }
-    }
 }

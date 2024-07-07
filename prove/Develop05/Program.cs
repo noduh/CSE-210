@@ -15,6 +15,7 @@ class Program
 
     static void Main(string[] args)
     {
+        var options = new JsonSerializerOptions { IncludeFields = true, WriteIndented = true };
         int userChoice;
         string fileAddress;
         string goalType;
@@ -52,12 +53,15 @@ class Program
                 case 5: // Save
                     Console.Write("File Address: ");
                     fileAddress = Console.ReadLine();
-                    if (!quest.Save(fileAddress)) // if it fails
+                    jsonText = JsonSerializer.Serialize(quest, options); // create the json
+                    try
                     {
-                        Console.WriteLine("Failed. Try another address.");
-                        break;
+                        File.WriteAllText(fileAddress, jsonText);
                     }
-                    Console.WriteLine("Saved!");
+                    catch (IOException)
+                    {
+                        Console.WriteLine("Failed.");
+                    }
                     break;
                 case 6: // Load
                     Console.Write("File Address: ");
@@ -65,7 +69,7 @@ class Program
                     try
                     {
                         jsonText = File.ReadAllText(fileAddress);
-                        quest = JsonSerializer.Deserialize<Quest>(jsonText);
+                        quest = JsonSerializer.Deserialize<Quest>(jsonText, options);
                         Console.WriteLine("Loaded!");
                     }
                     catch (IOException)

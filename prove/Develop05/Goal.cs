@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
 
-[JsonDerivedType(typeof(SimpleGoal))]
-[JsonDerivedType(typeof(EternalGoal))]
-[JsonDerivedType(typeof(ChecklistGoal))]
+[JsonDerivedType(typeof(SimpleGoal), typeDiscriminator: "simple")]
+[JsonDerivedType(typeof(EternalGoal), typeDiscriminator: "eternal")]
+[JsonDerivedType(typeof(ChecklistGoal), typeDiscriminator: "checklist")]
 public abstract class Goal
 {
     // Goal Types
@@ -18,9 +18,6 @@ public abstract class Goal
 
     [JsonInclude]
     protected string name;
-
-    [JsonInclude]
-    protected string type;
 
     public Goal(string name, int points)
     {

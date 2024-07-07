@@ -2,13 +2,8 @@ using System.Text.Json.Serialization;
 
 public class EternalGoal : Goal
 {
-
-    [JsonConstructor]
     public EternalGoal(string name, int eternalPoints)
-        : base(name, eternalPoints)
-    {
-        type = ETERNAL;
-    }
+        : base(name, eternalPoints) { }
 
     public override bool MarkComplete()
     {

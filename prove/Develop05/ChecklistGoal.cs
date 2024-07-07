@@ -11,11 +11,9 @@ public class ChecklistGoal : Goal
     [JsonInclude]
     private int bonusPoints;
 
-    [JsonConstructor]
     public ChecklistGoal(string name, int points, int timesToComplete, int bonusPoints)
         : base(name, points)
     {
-        type = CHECKLIST;
         this.timesToComplete = timesToComplete;
         this.bonusPoints = bonusPoints;
         timesCompleted = 0;
