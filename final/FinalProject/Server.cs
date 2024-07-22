@@ -61,13 +61,15 @@ public class Server
             {
                 int bytesReceived = await socket.ReceiveAsync(buffer, cancelationToken);
                 string stringReceived = Encoding.UTF8.GetString(buffer, 0, bytesReceived);
-                if (stringReceived.ToLower() == DISCONNECT_STRING)
+                if (stringReceived.ToLower() == DISCONNECT_STRING) // only display and reply if it's not a disconnect message
                 {
                     keepListening = false;
+                    await socket.SendAsync(Encoding.UTF8.GetBytes(DISCONNECT_STRING));
                 }
                 else
                 {
                     ServerLog($"Received Message: {stringReceived}");
+                    await socket.SendAsync(Encoding.UTF8.GetBytes("Heard ya loud and clear!"));
                 }
             }
             catch (OperationCanceledException) // for when the server stops
