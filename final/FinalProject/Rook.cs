@@ -1,7 +1,7 @@
 public class Rook : Piece
 {
-    public Rook((int, int) startIndex)
-        : base(Rook, startIndex) { }
+    public Rook(string color, (int, int) startIndex)
+        : base(Rook, color, startIndex) { }
 
     public override List<Move> LegalMoves()
     {

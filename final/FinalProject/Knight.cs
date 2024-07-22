@@ -1,7 +1,7 @@
 public class Knight : Piece
 {
-    public Knight((int, int) startIndex)
-        : base(Knight, startIndex) { }
+    public Knight(string color, (int, int) startIndex)
+        : base(Knight, color, startIndex) { }
 
     public override List<Move> LegalMoves()
     {

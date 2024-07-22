@@ -2,21 +2,25 @@ public abstract class Piece
 {
     // types of pieces
     public const string Pawn = "pawn";
-    public const string Rook = "rook";
-    public const string Knight = "knight";
-    public const string Bishop = "bishop";
-    public const string King = "king";
-    public const string Queen = "queen";
+    public const string Rook = "Rook";
+    public const string Knight = "kNight";
+    public const string Bishop = "Bishop";
+    public const string King = "King";
+    public const string Queen = "Queen";
+    public const string Black = "black";
+    public const string White = "white";
 
     protected string pieceType;
     protected bool hasMoved;
     protected (int, int) currentIndex; // array index on the chess board
+    protected string color;
 
-    public Piece(string pieceType, (int, int) startIndex)
+    public Piece(string pieceType, string color, (int, int) startIndex)
     {
         this.pieceType = pieceType;
         currentIndex = startIndex;
         hasMoved = false;
+        this.color = color;
     }
 
     public bool HasMoved()
@@ -40,5 +44,15 @@ public abstract class Piece
     public string GetPieceType()
     {
         return pieceType;
+    }
+
+    public override string ToString()
+    {
+        return pieceType[0].ToString() + pieceType[1].ToString();
+    }
+
+    public string GetColor()
+    {
+        return color;
     }
 }

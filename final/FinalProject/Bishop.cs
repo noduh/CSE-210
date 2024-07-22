@@ -1,7 +1,7 @@
 public class Bishop : Piece
 {
-    public Bishop((int, int) startIndex)
-        : base(Bishop, startIndex) { }
+    public Bishop(string color, (int, int) startIndex)
+        : base(Bishop, color, startIndex) { }
 
     public override List<Move> LegalMoves()
     {
