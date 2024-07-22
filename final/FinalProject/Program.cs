@@ -2,8 +2,9 @@ using System;
 
 class Program
 {
-    static void Main(string[] args)
+    static async Task Main()
     {
-        Console.WriteLine("Hello FinalProject World!");
+        Server server = new Server(11000);
+        await server.Run();
     }
 }
