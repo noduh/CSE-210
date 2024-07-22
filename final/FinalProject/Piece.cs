@@ -10,10 +10,12 @@ public abstract class Piece
 
     protected string pieceType;
     protected bool hasMoved;
+    protected (int, int) currentIndex; // array index on the chess board
 
-    public Piece(string pieceType)
+    public Piece(string pieceType, (int, int) startIndex)
     {
         this.pieceType = pieceType;
+        currentIndex = startIndex;
         hasMoved = false;
     }
 
@@ -22,10 +24,21 @@ public abstract class Piece
         return hasMoved;
     }
 
-    public void Move() // makes sure the game knows the piece has moved
+    public bool MovePiece(Move move) // returns true only if it's legal and successfully moved
     {
-        hasMoved = true;
+        if (this.LegalMoves().Contains(move))
+        {
+            currentIndex = move.GetEndIndex();
+            hasMoved = true;
+            return true;
+        }
+        return false;
     }
 
     public abstract List<Move> LegalMoves(); // gives a list of legal moves. defined by piece
+
+    public string GetPieceType()
+    {
+        return pieceType;
+    }
 }

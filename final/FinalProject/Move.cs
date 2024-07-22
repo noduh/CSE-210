@@ -15,22 +15,31 @@ public class Move
 
     public (int, int) GetStartIndex()
     {
-        int rankIndex = startRank - 65; // convert to an index (starts at 0)
-        int fileIndex = startFile - 1; // move to start at indecx 0
-
-        return (rankIndex, fileIndex);
+        return ToIndex(startRank, startFile);
     }
 
     public (int, int) GetEndIndex()
     {
-        int rankIndex = endRank - 65; // convert to an index (starts at 0)
-        int fileIndex = endFile - 1; // move to start at indecx 0
-
-        return (rankIndex, fileIndex);
+        return ToIndex(endRank, endFile);
     }
 
     public override string ToString()
     {
         return $"{startRank}{startFile} {endRank}{endFile}";
+    }
+
+    public static (char, int) ToChessNotation(int rankIndex, int fileIndex)
+    {
+        char rank = (char)(rankIndex + 65);
+        int file = fileIndex + 1;
+
+        return (rank, file);
+    }
+
+    public static (int, int) ToIndex(char rank, int file) {
+        int rankIndex = rank - 65; // convert to an index (starts at 0)
+        int fileIndex = file - 1; // move to start at indecx 0
+
+        return (rankIndex, fileIndex);
     }
 }
