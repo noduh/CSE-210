@@ -5,7 +5,7 @@ public class Board
 {
     private Piece[,] board = new Piece[8, 8];
     private List<Piece> capturedPieces;
-    private (User white, User black) players;
+    private (User white, User black) players = (null, null);
     private string colorTurn;
 
     public Board()

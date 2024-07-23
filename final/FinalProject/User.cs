@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 public class User
 {
     public const string Player = "player";
@@ -5,7 +7,9 @@ public class User
     public const string White = "white";
     public const string Black = "black";
 
+    [JsonInclude]
     private string name;
+    [JsonInclude]
     private string side;
 
     public User(string name)

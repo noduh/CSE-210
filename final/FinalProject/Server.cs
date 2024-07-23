@@ -3,6 +3,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.VisualBasic;
 
 public class Server
 {
@@ -14,6 +15,7 @@ public class Server
     private bool isRunning;
     private CancellationTokenSource cts;
     private CancellationToken cancelationToken;
+    private JsonSerializerOptions options = new JsonSerializerOptions { IncludeFields = true };
 
     // Game Variables
     public Board board;
@@ -100,7 +102,7 @@ public class Server
         Console.WriteLine($"[Server] {message}");
     }
 
-    private void HandleCommandJson(string commandJson, Socket socket)
+    private async void HandleCommandJson(string commandJson, Socket socket)
     {
         bool allowed = false;
         Command command = null;
@@ -113,7 +115,7 @@ public class Server
 
         try
         {
-            command = JsonSerializer.Deserialize<Command>(commandJson);
+            command = JsonSerializer.Deserialize<Command>(commandJson, options);
         }
         catch (JsonException)
         {
@@ -192,7 +194,7 @@ public class Server
         response = new Response(allowed, 0, reason);
 
         // send the response
-        string jsonString = JsonSerializer.Serialize(response);
-        socket.SendAsync(Encoding.UTF8.GetBytes(jsonString));
+        string jsonString = JsonSerializer.Serialize(response, options);
+        await socket.SendAsync(Encoding.UTF8.GetBytes(jsonString));
     }
 }

@@ -1,8 +1,18 @@
+using System.Text.Json.Serialization;
+
 public class Command
 {
+    [JsonInclude]
     private User sender;
+
+    [JsonInclude]
     private string command;
+
+    [JsonInclude]
     private List<string> args;
+
+    [JsonConstructor]
+    public Command() { }
 
     public Command(User sender, string command)
     {
