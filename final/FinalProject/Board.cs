@@ -94,8 +94,11 @@ public class Board
         return GetPiece(rankIndex, fileIndex);
     }
 
-    public bool TakeTurn(User player, Move move)
+    public bool TakeTurn(User player, Move move) // returns true if move is allowed and completed
     {
+        // currently this doesn't check if they've jumped over pieces. this will be implemented in each Piece
+        // some if not all pieces can currently move to their own spot. fix in each Piece
+
         bool captureHappened = false;
 
         // handle turn check
@@ -118,6 +121,7 @@ public class Board
         Piece capturedPiece = GetPiece(endRank, endFile); // used in the case of a capture
         if (capturedPiece != null) // check for and handle capture
         {
+            // FIX PAWNS
             if (capturedPiece.GetColor() == player.GetSide()) // dont capture your own stuff
             {
                 return false;

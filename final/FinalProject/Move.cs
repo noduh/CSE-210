@@ -42,4 +42,19 @@ public class Move
 
         return (rankIndex, fileIndex);
     }
+
+    public static bool InBounds(Move move)
+    {
+        (int rank, int file) = move.GetEndIndex();
+        if (rank < 0 || rank > 7) // check rank in bounds
+        {
+            return false;
+        }
+        if (file < 0 || file > 7)
+        {
+            return false;
+        }
+
+        return true; // if neither were out of bounds, you're good
+    }
 }

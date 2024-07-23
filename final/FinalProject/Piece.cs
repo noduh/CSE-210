@@ -12,7 +12,7 @@ public abstract class Piece
 
     protected string pieceType;
     protected bool hasMoved;
-    protected (int, int) currentIndex; // array index on the chess board
+    protected (int rank, int file) currentIndex; // array index on the chess board
     protected string color;
 
     public Piece(string pieceType, string color, (int, int) startIndex)
