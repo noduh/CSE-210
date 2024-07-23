@@ -1,21 +1,32 @@
+using System.Text.Json.Serialization;
+
 public class Response
 {
-    private bool isError;
+    [JsonInclude]
+    private bool allowed;
+
+    [JsonInclude]
     private int code; // will be implemented later
-    private string explanation;
+
+    [JsonInclude]
+    private string reason;
+
+    [JsonInclude]
     private int followingDataSize = 0; // will be implemented later
+
+    [JsonInclude]
     private string followingDataType = ""; // will be implemented later
 
-    public Response(bool isError, int code)
+    public Response(bool allowed, int code)
     {
-        this.isError = isError;
+        this.allowed = allowed;
         this.code = code;
     }
 
-    public Response(bool isError, int code, string explanation)
+    public Response(bool allowed, int code, string reason)
     {
-        this.isError = isError;
+        this.allowed = allowed;
         this.code = code;
-        this.explanation = explanation;
+        this.reason = reason;
     }
 }

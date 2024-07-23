@@ -1,6 +1,8 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 public class Server
 {
@@ -74,8 +76,7 @@ public class Server
                 }
                 else
                 {
-                    ServerLog($"Received Message: {stringReceived}");
-                    await socket.SendAsync(Encoding.UTF8.GetBytes("Heard ya loud and clear!"));
+                    HandleCommandJson(stringReceived, socket);
                 }
             }
             catch (OperationCanceledException) // for when the server stops
@@ -97,5 +98,101 @@ public class Server
     public static void ServerLog(string message)
     {
         Console.WriteLine($"[Server] {message}");
+    }
+
+    private void HandleCommandJson(string commandJson, Socket socket)
+    {
+        bool allowed = false;
+        Command command = null;
+        User sender;
+        string commandString;
+        List<string> args;
+        string reason = "unknown error";
+
+        Response response; // response to be sent at the end
+
+        try
+        {
+            command = JsonSerializer.Deserialize<Command>(commandJson);
+        }
+        catch (JsonException)
+        {
+            allowed = false;
+            reason = "bad json";
+        }
+
+        if (command != null)
+        {
+            sender = command.GetSender();
+            commandString = command.GetCommand();
+            args = command.GetArgs();
+
+            switch (commandString)
+            {
+                case "join":
+                    if (board.AddPlayer(sender))
+                    {
+                        allowed = true;
+                        reason = "successfully joined";
+                    }
+                    else
+                    {
+                        allowed = false;
+                        reason = "couldn't join";
+                    }
+                    break;
+
+                case "move":
+                    if (args.Count != 2) // check for right amount of args
+                    {
+                        allowed = false;
+                        reason = "bad move";
+                        break;
+                    }
+
+                    string startLocationString = args[0];
+                    string endLocationString = args[1];
+                    if (startLocationString.Length != 2 || endLocationString.Length != 2) // check for right length of things
+                    {
+                        allowed = false;
+                        reason = "bad move";
+                        break;
+                    }
+
+                    // create start and end locations in chess notation
+                    char startRank = char.ToUpper(startLocationString[0]);
+                    int startFile = startLocationString[1];
+                    char endRank = char.ToUpper(endLocationString[0]);
+                    int endFile = endLocationString[1];
+
+                    // create move from locations
+                    Move attemptedMove = new Move(startRank, startFile, endRank, endFile);
+
+                    // attempt to move
+                    if (board.TakeTurn(sender, attemptedMove))
+                    {
+                        allowed = true;
+                        reason = "successfully moved";
+                    }
+                    else
+                    {
+                        allowed = false;
+                        reason = "move not allowed";
+                    }
+
+                    break;
+
+                default:
+                    allowed = false;
+                    reason = "bad command";
+                    break;
+            }
+        }
+
+        response = new Response(allowed, 0, reason);
+
+        // send the response
+        string jsonString = JsonSerializer.Serialize(response);
+        socket.SendAsync(Encoding.UTF8.GetBytes(jsonString));
     }
 }
