@@ -13,12 +13,18 @@ public class Server
     private CancellationTokenSource cts;
     private CancellationToken cancelationToken;
 
+    // Game Variables
+    public Board board;
+
     public Server(int port)
     {
         iPEndPoint = new(IPAddress.Any, port);
         connected = new List<Socket>();
         cts = new CancellationTokenSource();
         cancelationToken = cts.Token;
+
+        // Create Game
+        board = new Board();
     }
 
     public async Task Run()
